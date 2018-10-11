@@ -10,6 +10,7 @@ class DevelopmentConfig(BaseConfig):
     INDEX_PER_PAGE=9
     ADMIN_PER_PAGE=9
 
+
 class ProductionConfig(BaseConfig):
     pass
 
