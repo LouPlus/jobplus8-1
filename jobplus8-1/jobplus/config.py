@@ -11,6 +11,7 @@ class DevelopmentConfig(BaseConfig):
     ADMIN_PER_PAGE=9
     COMPANY_PER_PAGE=12
 
+
 class ProductionConfig(BaseConfig):
     pass
 
