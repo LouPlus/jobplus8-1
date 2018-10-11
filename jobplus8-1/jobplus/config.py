@@ -9,12 +9,7 @@ class DevelopmentConfig(BaseConfig):
     TEMPLATES_AUTO_RELOAD = True
     INDEX_PER_PAGE=9
     ADMIN_PER_PAGE=9
-<<<<<<< HEAD
-
-=======
->>>>>>> 管理员管理公司、求职者和职位 (#39)
-
-
+    
 class ProductionConfig(BaseConfig):
     pass
 
