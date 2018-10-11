@@ -9,12 +9,15 @@ from flask_login import LoginManager
 
 def register_blueprints(app):
     from .handlers import front,admin,company,user,job
-    app.register_blueprint(front)
+    app.register_blueprint(front) 
     app.register_blueprint(admin)
     app.register_blueprint(user)
     app.register_blueprint(company)
     app.register_blueprint(job)
-    
+
+
+
+
 
 def register_extensions(app):
     db.init_app(app)
