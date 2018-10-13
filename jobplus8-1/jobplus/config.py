@@ -9,12 +9,7 @@ class DevelopmentConfig(BaseConfig):
     TEMPLATES_AUTO_RELOAD = True
     INDEX_PER_PAGE=9
     ADMIN_PER_PAGE=9
-<<<<<<< HEAD
-
-
-=======
     
->>>>>>> fix #16 fix #17  flask_app config.py
 class ProductionConfig(BaseConfig):
     pass
 
