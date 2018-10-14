@@ -3,6 +3,9 @@ from flask import Flask, render_template, url_for
 from .config import configs
 from jobplus.models import db,User,Job,Company
 from flask_login import LoginManager
+from flask_bootstrap import Bootstrap
+
+
 
 def register_blueprints(app):
     from .handlers import front,admin,company,user,job
@@ -18,5 +21,7 @@ def create_app(config):
     app.config.from_object(configs.get(config))
     db.init_app(app)
     Migrate(app,db)
+    bootstrap = Bootstrap(app)
+
     register_blueprints(app)
     return app
