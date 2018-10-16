@@ -28,8 +28,6 @@ class RegisterForm(FlaskForm):
         except:
             db.session.rollback()
         return user
-    
-
 
 class RegisterForm_Company(FlaskForm):
     username = StringField('公司名称',validators=[DataRequired(),Length(3,24,message='用户名长度必须大于3小于24位数')])
@@ -49,7 +47,6 @@ class RegisterForm_Company(FlaskForm):
         user = User()
         self.populate_obj(user)
         user.role = 20
-
         db.session.add(user)
         try:
             db.session.commit()
@@ -73,8 +70,6 @@ class LoginForm(FlaskForm):
             raise ValidationError('密码错误')
 
 
-
-
 class UserProfileForm(FlaskForm):
     username = StringField('用户名',validators=[DataRequired(),Length(3,24,message='用户名长度必须大于3小于24位数')])
     email = StringField('电子邮箱',validators=[DataRequired(),Email(message='email格式错误')])
@@ -86,7 +81,6 @@ class UserProfileForm(FlaskForm):
     submit = SubmitField('提交')
 
     def __init__(self,id,**kw):
-
         super(UserProfileForm,self).__init__(**kw)
         self.id=id
 

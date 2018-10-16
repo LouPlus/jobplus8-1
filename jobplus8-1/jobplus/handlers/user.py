@@ -23,3 +23,4 @@ def user_profile(user_id):
     return render_template('user/profile.html',form=form,user=user)
   
 
+
