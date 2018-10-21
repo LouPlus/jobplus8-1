@@ -107,6 +107,7 @@ class Job(Base):
 
 
 
+
     def __repr__(self):
         return '<Job {}>'.format(self.name)
 
@@ -201,6 +202,7 @@ class Company(Base):
     user_id = db.Column(db.Integer,db.ForeignKey('user.id',ondelete='SET NULL'))
 
 
+
     user = db.relationship('User',uselist=False,backref=db.backref('company',uselist=False))
 
     def __repr__(self):
@@ -223,6 +225,6 @@ class Company(Base):
             return self.url.split('https://')[1]
 
 
+
     @property
     def detail(self):
-        return self.about.split(' ')
