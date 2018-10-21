@@ -94,7 +94,10 @@ class Job(Base):
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
     company = db.relationship('Company',uselist=False,backref=db.backref('job',lazy='dynamic'))
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1
     def __repr__(self):
         return '<Job {}>'.format(self.name)
 
