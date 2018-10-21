@@ -117,5 +117,9 @@ from faker import Faker
 with open('/jobplus/data/data.json') as f:
     dic = json.load(f)
 
+<<<<<<< HEAD
 print(dic) 
+>>>>>>> 1
+=======
+print(dic)
 >>>>>>> 1
