@@ -95,7 +95,6 @@ class Job(Base):
     company = db.relationship('Company',uselist=False,backref=db.backref('job',lazy='dynamic'))
 
 
-
     def __repr__(self):
         return '<Job {}>'.format(self.name)
 
@@ -129,8 +128,9 @@ class Company(Base):
     __tablename__ = 'company'
 
     id = db.Column(db.Integer,primary_key=True)
-
-
+    name = db.Column(db.String(64), nullable=False, index=True, unique=True)
+    url = db.Column(db.String(32),nullable=False)#公司网址
+    logo = db.Column(db.String(64))#公司logo
     url = db.Column(db.String(512),nullable=False)#公司网址
     logo = db.Column(db.String(512))#公司logo
     about = db.Column(db.String(1024),nullable=False)#公司详情
