@@ -40,9 +40,13 @@ class User(Base,UserMixin):
     role = db.Column(db.SmallInteger,default=USER)#权限，默认为用户
     _password = db.Column('password',db.String(256),nullable=False)#密码
     phonenumber = db.Column(db.Text)#手机号
+<<<<<<< HEAD
 
     work_experience = db.Column(db.SmallInteger)#工作年限时长  
 
+=======
+    work_experience = db.Column(db.SmallInteger)#工作年限时长
+>>>>>>> 1
     upload_resume_url =db.Column(db.String(64))#个人简历url
     is_disable = db.Column(db.Boolean,default=False)#用户是是否禁用标示
     companys = db.relationship('Company',uselist=False)#公司的链接关系口
@@ -101,6 +105,10 @@ class Job(Base):
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
     company = db.relationship('Company',uselist=False,backref=db.backref('job',lazy='dynamic'))
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1
 
     def __repr__(self):
         return '<Job {}>'.format(self.name)
@@ -124,7 +132,10 @@ class Dilevery(Base):
     user_id = db.Column(db.Integer,db.ForeignKey('user.id',ondelete='SET NULL'))#用户id，默认为空
     status = db.Column(db.SmallInteger,default=STATUS_WAITING)#投递状态，默认为等待企业审核
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1
     response = db.Column(db.String(256))#企业回应数据
 
 
@@ -143,8 +154,12 @@ class Company(Base):
     logo = db.Column(db.String(512))#公司logo
 
     about = db.Column(db.String(1024),nullable=False)#公司详情
+<<<<<<< HEAD
     description = db.Column(db.String(24))#不知道有啥用
 
+=======
+    description = db.Column(db.String(24))#一句话描述
+>>>>>>> 1
     location = db.Column(db.String(64))#公司地址
 
     phone = db.Column(db.Text)#公司电话
@@ -158,11 +173,17 @@ class Company(Base):
 
     user_id = db.Column(db.Integer,db.ForeignKey('user.id',ondelete='SET NULL'))
 
+<<<<<<< HEAD
  
+=======
+>>>>>>> 1
     user = db.relationship('User',uselist=False,backref=db.backref('company',uselist=False))
-    
+
     def __repr__(self):
         return '<Company {}>'.format(self.id)
+<<<<<<< HEAD
 
     
 
+=======
+>>>>>>> 1

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import  json
 from ..models import Job, Company, User, db
 from faker import Faker
@@ -107,3 +108,14 @@ class Data:
 
 def run():
     Data().add_data
+=======
+from json
+from ..models import Job, Company
+from faker import Faker
+
+
+with open('/jobplus/data/data.json') as f:
+    dic = json.load(f)
+
+print(dic) 
+>>>>>>> 1
