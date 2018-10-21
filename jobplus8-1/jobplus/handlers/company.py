@@ -12,8 +12,6 @@ def company_index():
     return render_template('company/index.html')
 
 
-
-
 @company.route('/profile',methods=['GET','POST'])
 @company_required
 def profile():

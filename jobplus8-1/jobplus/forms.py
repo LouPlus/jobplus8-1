@@ -116,8 +116,8 @@ class CompanyProfileForm(FlaskForm):
 
     def validate_username(self,field):
         if User.query.filter(User.username == field.data,User.id != self.id).first():
-            raise ValidationError('您修改的公司名称已存在')
-
+            raise ValidationError('您修改的用户名称已存在')
+            
     def validate_email(self,field):
         if User.query.filter(User.email == field.data,User.id != self.id).first():
             raise ValidationError('您修改的邮箱已注册')
@@ -125,6 +125,7 @@ class CompanyProfileForm(FlaskForm):
     def validate_password(self,field):
         if field.data != ''and (len(str(field.data)) < 3 or len(str(field.data)) >24) :
             raise ValidationError('您修改的密码长度必须在3到23位之间')
+
 
     """公司资料数据更新"""
     def Company_update(self,user):
@@ -137,10 +138,7 @@ class CompanyProfileForm(FlaskForm):
         else:
             tmp = Company()#如果不存在，新建公司数据表对象
             tmp.user_id = user.id#公司数据表外链到用户表id中
-
         self.populate_obj(tmp)#提交表单数据赋值到公司表中
-
-
         db.session.add(user)
         db.session.add(tmp)
         try:
@@ -167,7 +165,6 @@ class AddUserForm(FlaskForm):
     def validate_email(self,field):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('邮箱已注册')
-
 
     def create_user(self):
         user = User()

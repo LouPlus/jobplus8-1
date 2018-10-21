@@ -36,6 +36,7 @@ def login():
                     return redirect(url_for('.index'))
                 else:
                     return redirect(url_for('user.user_profile'))
+
         return render_template('404.html'),404
     return render_template('login.html',form = form)
 

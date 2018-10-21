@@ -67,11 +67,13 @@ class User(Base,UserMixin):
     @property#判断是否公司权限
     def is_company(self):
         return self.role==self.COMPANY
+
     @property#判断是否为用户
     def is_user(self):
         return self.role==self.USER
 
-# 用户与职位是多对多的关系
+
+# 职位与公司是多对一的关系
 class Job(Base):
 
     __tablename__ = 'job'
@@ -91,6 +93,7 @@ class Job(Base):
 
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
     company = db.relationship('Company',uselist=False,backref=db.backref('job',lazy='dynamic'))
+
     
 
     def __repr__(self):
@@ -120,16 +123,16 @@ class Dilevery(Base):
 
         
 
-#公司与职员关系是一对多的关系
+#公司与用户id是一对一的关系
 class Company(Base):
 
     __tablename__ = 'company'
 
     id = db.Column(db.Integer,primary_key=True)
 
+
     url = db.Column(db.String(512),nullable=False)#公司网址
     logo = db.Column(db.String(512))#公司logo
-
     about = db.Column(db.String(1024),nullable=False)#公司详情
     #description = db.Column(db.String(24))#不知道有啥用
     location = db.Column(db.String(64))#公司地址
