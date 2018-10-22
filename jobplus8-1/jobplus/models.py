@@ -127,9 +127,9 @@ class Company(Base):
     __tablename__ = 'company'
 
     id = db.Column(db.Integer,primary_key=True)
-    name = db.Column(db.String(64), nullable=False, index=True, unique=True)
+    #name = db.Column(db.String(64), nullable=False, index=True, unique=True)
     url = db.Column(db.String(32),nullable=False)#公司网址
-    logo = db.Column(db.String(64))#公司logo
+    logo = db.Column(db.String(128))#公司logo
     about = db.Column(db.String(1024),nullable=False)#公司详情
     description = db.Column(db.String(24))#一句话描述
     location = db.Column(db.String(64))#公司地址

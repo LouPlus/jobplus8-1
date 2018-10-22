@@ -8,14 +8,15 @@ faker = Faker("zh_CN")
 class Data:
     def __init__(self):
         self.f_company = 0
+        self.f_name = 0
     @property
     def user(self):
         return  User(name = faker.name(),
-                username = faker.user_name(),
+                username = self.f_name,
                 email = faker.email(),
                 role = 20,
                 phonenumber = faker.phone_number(),
-                password = "12345678910",
+                password = "123456",
                 companys = self.f_company
                 )
 
@@ -25,9 +26,9 @@ class Data:
             dics = json.load(f)
 
         for i in dics:
-            yield Company(  name = i['name'],
-                            url = i['url'],
-                            logo = i['logo'],
+            self.f_name = i['name']
+            yield Company(  url = i['url'],
+                            logo = "https:"+i['logo'],
                             about = i['about'],
                             description = i['description'],
                             location = i['location'],
@@ -64,7 +65,7 @@ class Data:
                 db.session.rollback()
 
 
-            self.f_company = Company.query.filter_by(name = company.name).first()
+            self.f_company = Company.query.filter_by(id = company.id).first()
 
 
             user = self.user
@@ -76,8 +77,6 @@ class Data:
                 db.session.rollback()
 
 
-
-
             for i in range(10):
                 job = self.jobs
                 db.session.add(job)
@@ -87,6 +86,23 @@ class Data:
                 except Exception as e:
                     print(e)
                     db.session.rollback()
+
+        #add admin
+        user =  User(name = faker.name(),
+                username = 'admin',
+                email = 'admin@qq.com',
+                role = 30,
+                phonenumber = faker.phone_number(),
+                password = "123456"
+                )
+
+        db.session.add(user)
+        try:
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+
 
 
 def run():
