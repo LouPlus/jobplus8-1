@@ -145,6 +145,7 @@ class Company(Base):
 
     id = db.Column(db.Integer,primary_key=True)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
     url = db.Column(db.String(512),nullable=False)#公司网址
@@ -155,6 +156,11 @@ class Company(Base):
     url = db.Column(db.String(32),nullable=False)#公司网址
     logo = db.Column(db.String(64))#公司logo
 >>>>>>> 1
+=======
+    #name = db.Column(db.String(64), nullable=False, index=True, unique=True)
+    url = db.Column(db.String(32),nullable=False)#公司网址
+    logo = db.Column(db.String(128))#公司logo
+>>>>>>> test data
     about = db.Column(db.String(1024),nullable=False)#公司详情
     description = db.Column(db.String(24))#不知道有啥用
 
