@@ -9,6 +9,7 @@ class DevelopmentConfig(BaseConfig):
     TEMPLATES_AUTO_RELOAD = True
     INDEX_PER_PAGE=9
     ADMIN_PER_PAGE=9
+    COMPANY_PER_PAGE=8
 
 class ProductionConfig(BaseConfig):
     pass

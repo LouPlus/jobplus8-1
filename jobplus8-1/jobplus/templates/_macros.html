@@ -3,16 +3,23 @@
 <nav class="nav-pagination" aria-label="Page navigation">
     <ul class=pagination>
     <li{% if not pagination.has_prev %} class="disabled"{% endif %}><a href="{{url_for(endpoint, page=pagination.prev_num) if pagination.has_prev else '#'}}">&laquo;</a></li>
+<<<<<<< HEAD
 
     {% for page in pagination.iter_pages(left_edge=2,right_edge=2) %}
 
+=======
+    {% for page in pagination.iter_pages(left_edge=2,right_edge=2) %}
+>>>>>>> 1
         {% if page %}
             {% if page != pagination.page %}
             <li><a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a></li>
             {% else %}
             <li class="active"><a href="#">{{page}} <span class="sr-only">(current)</span></a></li>
             {% endif %}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1
         {#
         {% else %}
 
@@ -26,7 +33,10 @@
 </nav>
 {% endmacro %}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1
 {% macro render_job(job) %}
 
   <div class="col-sm-6 col-md-4">
@@ -82,4 +92,7 @@
 
 
 {% endmacro %}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1

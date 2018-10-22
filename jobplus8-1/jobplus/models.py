@@ -106,6 +106,16 @@ class Job(Base):
     def __repr__(self):
         return '<Job {}>'.format(self.name)
 
+    @property
+    def job_list(self):
+
+        return self.job_label.split(' ')
+
+    @property
+    def name(self):
+        name = self.jobname.split('/')
+        return name[0]
+
 
 
 #用于记录用户求职者投递建立到职位的状态信息
@@ -164,3 +174,11 @@ class Company(Base):
 
     def __repr__(self):
         return '<Company {}>'.format(self.id)
+
+    @property
+    def tag_list(self):
+        return self.tag.split(',')
+
+    @property
+    def count(self):
+        return len(Job.query.filter_by(company_id=self.id).all())
