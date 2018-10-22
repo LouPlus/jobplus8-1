@@ -82,31 +82,25 @@ class Job(Base):
     __tablename__ = 'job'
 
     id = db.Column(db.Integer,primary_key=True,nullable=False)#id自增
-<<<<<<< HEAD
 
     jobname = db.Column(db.String(32),nullable=False)#工作名称，岗位名称
 
-=======
-    jobname = db.Column(db.String(32),nullable=False)#工作名称，岗位名称
->>>>>>> 1
     description = db.Column(db.String(128))#职位描述
     experience_requirement = db.Column(db.String(32))#工作能力和经验要求
     degree_requirement = db.Column(db.String(32))#学历要求
     lowest_salary = db.Column(db.Integer)#最低薪酬
     highest_salary = db.Column(db.Integer)#最高薪酬
     location = db.Column(db.String(24))#工作地点
-<<<<<<< HEAD
 
     education = db.Column(db.String(32))#受教育程度
 
-=======
->>>>>>> 1
     job_label = db.Column(db.String(128))#职位标签，标签用逗号隔开
     is_fulltime = db.Column(db.Boolean,default=True)#是否全职、兼职等
     is_open = db.Column(db.Boolean,default=True)#职位是否开放或者关闭状态
 
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
     company = db.relationship('Company',uselist=False,backref=db.backref('job',lazy='dynamic'))
+
 
 
     def __repr__(self):
@@ -131,7 +125,7 @@ class Dilevery(Base):
     user_id = db.Column(db.Integer,db.ForeignKey('user.id',ondelete='SET NULL'))#用户id，默认为空
     status = db.Column(db.SmallInteger,default=STATUS_WAITING)#投递状态，默认为等待企业审核
 
-    
+
     response = db.Column(db.String(256))#企业回应数据
 
 
@@ -144,23 +138,11 @@ class Company(Base):
     __tablename__ = 'company'
 
     id = db.Column(db.Integer,primary_key=True)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
     url = db.Column(db.String(512),nullable=False)#公司网址
     logo = db.Column(db.String(512))#公司logo
 
-=======
-    name = db.Column(db.String(64), nullable=False, index=True, unique=True)
-    url = db.Column(db.String(32),nullable=False)#公司网址
-    logo = db.Column(db.String(64))#公司logo
->>>>>>> 1
-=======
-    #name = db.Column(db.String(64), nullable=False, index=True, unique=True)
-    url = db.Column(db.String(32),nullable=False)#公司网址
-    logo = db.Column(db.String(128))#公司logo
->>>>>>> test data
     about = db.Column(db.String(1024),nullable=False)#公司详情
     description = db.Column(db.String(24))#不知道有啥用
 

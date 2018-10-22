@@ -43,13 +43,14 @@ class Data:
     @property
     def jobs(self):
         de = ['大专以上','本科以上','硕士以上']
+        ex = ['1年以上','1-3年','3-5年','无经验',]
         lo = [2000,3000,5000,6000]
         hi = [7000,8000,9000,10000]
 
 
         return   Job(jobname=faker.job(),
                     description=faker.sentence(),
-                    experience_requirement = faker.sentence(),
+                    experience_requirement = random.choice(ex),
                     degree_requirement = random.choice(de),
                     lowest_salary = random.choice(lo),
                     highest_salary =random.choice(hi),
