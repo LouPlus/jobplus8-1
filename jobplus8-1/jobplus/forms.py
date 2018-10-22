@@ -1,10 +1,12 @@
+import os
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField,BooleanField,IntegerField,TextAreaField
 from wtforms import FileField
 from wtforms.validators import Length,Email,EqualTo,DataRequired,ValidationError,Required
 from wtforms.validators import URL
 from jobplus.models import User,Job,db,Company
-from flask import flash
+from flask import flash, url_for
 
 class RegisterForm(FlaskForm):
     username = StringField('用户名',validators=[DataRequired(),Length(3,24,message='用户名长度必须大于3小于24位数')])
@@ -56,7 +58,9 @@ class UserProfileForm(FlaskForm):
     password = PasswordField('密码')
     phonenumber = StringField('手机号',validators=[Length(11,12,message='请输入11位长度手机号码')])
     work_experience = IntegerField('工作年限')
-    upload_resume_url = StringField('个人简历URL地址')
+    upload_file = FileField('上传文件', 
+        validators=[FileAllowed(['pdf', 'txt', 'py', 'zip'])]
+    )
      
     submit = SubmitField('提交')
 
@@ -76,6 +80,11 @@ class UserProfileForm(FlaskForm):
         if field.data != ''and (len(str(field.data)) < 3 or len(str(field.data)) >24) :
             raise ValidationError('您修改的密码长度必须在3到23位之间')
 
+    def haha(self): # 返回文件的保存路径
+        f = self.upload_file.data
+        filename = self.username.data + '.haha'
+        f.save(os.path.join(os.getcwd(), 'jobplus/static/resumes', filename))
+        return url_for('static', filename=os.path.join('resumes', filename))
 
     def Profile_update(self,user):
         user.name = self.name.data
@@ -83,7 +92,7 @@ class UserProfileForm(FlaskForm):
         user.username = self.username.data
         user.phonenumber = self.phonenumber.data
         user.work_experience = self.work_experience.data
-        user.upload_resume_url = self.upload_resume_url.data
+        user.upload_resume_url = self.haha()
 
         if self.password.data:
             user.password = self.password.data
