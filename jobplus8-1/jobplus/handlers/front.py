@@ -13,6 +13,7 @@ front = Blueprint('front', __name__)
 @front.route('/')
 def index():
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     company_page = 1
     company_pagination = Company.query.order_by(Company.created_at.desc()).paginate(
@@ -30,6 +31,9 @@ def index():
     return render_template('index.html',company_pagination=company_pagination,job_pagination=job_pagination)
 =======
     jobs = Job.query.order_by(Job.highest_salary).limit(6).all()
+=======
+    jobs = Job.query.order_by(Job.highest_salary).limit(9).all()
+>>>>>>> 1
     companies = Company.query.limit(12).all()
     return render_template('index.html',jobs=jobs, companies = companies)
 >>>>>>> 1
