@@ -7,7 +7,7 @@ job = Blueprint('job',__name__,url_prefix='/job')
 def job_index():
     page = request.args.get('page', default=1, type=int)
 
-    pagination = Job.query.paginate(
+    pagination = Job.query.order_by('highest_salary').paginate(
         page = page,
         per_page = current_app.config['ADMIN_PER_PAGE'],
         error_out = False

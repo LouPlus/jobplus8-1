@@ -1,8 +1,8 @@
-"""shuju
+"""v1.0
 
-Revision ID: 6291f38f2d83
+Revision ID: e64071065f05
 Revises: 
-Create Date: 2018-10-22 19:57:32.283029
+Create Date: 2018-10-23 16:15:03.975778
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6291f38f2d83'
+revision = 'e64071065f05'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,6 +42,7 @@ def upgrade():
     sa.Column('url', sa.String(length=512), nullable=False),
     sa.Column('logo', sa.String(length=512), nullable=True),
     sa.Column('about', sa.String(length=1024), nullable=False),
+    sa.Column('description', sa.String(length=24), nullable=True),
     sa.Column('location', sa.String(length=64), nullable=True),
     sa.Column('phone', sa.Text(), nullable=True),
     sa.Column('c_email', sa.String(length=24), nullable=False),
@@ -70,8 +71,7 @@ def upgrade():
     sa.Column('is_open', sa.Boolean(), nullable=True),
     sa.Column('company_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ondelete='CASCADE'),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('jobname')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('delivery',
     sa.Column('created_at', sa.DateTime(), nullable=True),
