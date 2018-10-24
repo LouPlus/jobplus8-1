@@ -5,6 +5,7 @@ from wtforms.validators import Length,Email,EqualTo,DataRequired,ValidationError
 from wtforms.validators import URL
 from jobplus.models import User,Job,db,Company
 from flask import flash
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 class RegisterForm(FlaskForm):
     username = StringField('用户名',validators=[DataRequired(),Length(3,24,message='用户名长度必须大于3小于24位数')])
@@ -56,8 +57,9 @@ class UserProfileForm(FlaskForm):
     password = PasswordField('密码')
     phonenumber = StringField('手机号',validators=[Length(11,12,message='请输入11位长度手机号码')])
     work_experience = IntegerField('工作年限')
-    upload_resume_url = StringField('个人简历URL地址')
-     
+    upload_resume_file = FileField('简历文件上传', validators = [
+        FileAllowed(['pdf'],'PDF only')
+    ])
     submit = SubmitField('提交')
 
     def __init__(self,id,**kw):
@@ -71,7 +73,7 @@ class UserProfileForm(FlaskForm):
     def validate_email(self,field):
         if User.query.filter(User.email == field.data,User.id != self.id).first():
             raise ValidationError('您修改的邮箱已注册')
-   
+
     def validate_password(self,field):
         if field.data != ''and (len(str(field.data)) < 3 or len(str(field.data)) >24) :
             raise ValidationError('您修改的密码长度必须在3到23位之间')
@@ -83,7 +85,7 @@ class UserProfileForm(FlaskForm):
         user.username = self.username.data
         user.phonenumber = self.phonenumber.data
         user.work_experience = self.work_experience.data
-        user.upload_resume_url = self.upload_resume_url.data
+
 
         if self.password.data:
             user.password = self.password.data
@@ -103,7 +105,7 @@ class CompanyProfileForm(FlaskForm):
     c_email = StringField('公司电子邮箱联系方式',validators=[DataRequired(),Email(message='email格式错误')])
     phone = StringField('公司电话联系方式')
     url = StringField('公司网站',validators=[DataRequired(),Length(0,64)])
-    logo = StringField('Logo')    
+    logo = StringField('Logo')
     location = StringField('公司地址',validators=[Length(0,64)])
     financing = StringField('福利待遇')
     field = StringField('公司团队')
@@ -201,7 +203,7 @@ class AddCompanyForm(FlaskForm):
     def validate_name(self, field):
         if User.query.filter_by(username=field.data).first():
             raise ValidationError('公司名称已经存在')
-    
+
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('邮箱已经存在')
@@ -221,7 +223,7 @@ class AddCompanyForm(FlaskForm):
                        )
         db.session.add(user)
         db.session.add(company)
-        
+
         try:
             db.session.commit()
             flash('公司数据添加成功','success')
@@ -269,4 +271,3 @@ class AddJobForm(FlaskForm):
             db.session.rollback()
             flash('职位信息更新失败','info')
         return job
-

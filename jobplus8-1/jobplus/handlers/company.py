@@ -17,7 +17,15 @@ def company_index():
     )
     return render_template('company/index.html', pagination=pagination)
 
+@company.route('/<int:id>')
+def company_detail(id):
+    company = Company.query.get_or_404(id)
+    return render_template('company/company_detail.html', company=company, panel = 'about')
 
+@company.route('/<int:id>/jobs')
+def company_jobs(id):
+    company = Company.query.get_or_404(id)
+    return render_template('company/company_detail.html', company=company, panel = 'job')
 
 @company.route('/profile',methods=['GET','POST'])
 @company_required

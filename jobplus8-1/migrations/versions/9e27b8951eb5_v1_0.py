@@ -1,8 +1,8 @@
 """v1.0
 
-Revision ID: e64071065f05
+Revision ID: 9e27b8951eb5
 Revises: 
-Create Date: 2018-10-23 16:15:03.975778
+Create Date: 2018-10-24 18:20:47.700877
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e64071065f05'
+revision = '9e27b8951eb5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,7 +29,7 @@ def upgrade():
     sa.Column('password', sa.String(length=256), nullable=False),
     sa.Column('phonenumber', sa.Text(), nullable=True),
     sa.Column('work_experience', sa.SmallInteger(), nullable=True),
-    sa.Column('upload_resume_url', sa.String(length=64), nullable=True),
+    sa.Column('upload_resume_jobname', sa.String(length=64), nullable=True),
     sa.Column('is_disable', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}
+  {{company.user.username}}
+{% endblock %}
+{% block header %}
+  <div class="jumbotron">
+    <div class="container">
+      <div class="col-md-3">
+        <div class="thumbnail">
+          <img src="{{ company.logo }}">
+        </div>
+      </div>
+      <div class="col-md-9">
+        <h2>{{ company.user.username }}</h2>
+        <p>{{ company.description }}</p>
+        <a href="{{company.url}}">{{ company.web }}</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block company_index%}
+  <div class="col-md-8">
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="{% if panel == 'about' %}active{% endif %}"><a href="{{ url_for('company.company_detail', id=company.id) }}">公司介绍</a></li>
+        <li role="presentation" class="{% if panel == 'job' %}active{% endif %}"><a href="{{ url_for('company.company_jobs', id=company.id) }}">在招职位({{ company.count }})</a></li>
+    </ul>
+      <div class="company-detail">
+        {% if panel == 'about' %}
+        <p>{{ company.description}}</p>
+        {% else %}
+        {% for job in company.job %}
+        <div class="job-item">
+          <a href="{{ url_for('job.job_detail', id=job.id) }}">
+          <h4>{{ job.jobname }}</h4>
+          </a>
+          <p>
+            <span class="job-salary">{{ job.lowest_salary }}-{{ job.highest_salary }}</span>
+            &nbsp;
+            <span class="job-meta">经验{{ job.experience_requirement }}{% if not job.experience_requirement == '不限' %}年{% endif %}/{{ job.degree_requirement }}</span>
+            </p>
+
+        </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-md-4">
+    <h4>公司基本信息</h4>
+    <p>领域：{{ company.detail[0] }}</p>
+    <p>融资：{{ company.detail[1] }}</p>
+    <p>人员：{{ company.detail[2] }}</p>
+    <p>城市：{{ company.location }}</p>
+  </div>
+{% endblock %}

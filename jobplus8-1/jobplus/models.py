@@ -42,8 +42,7 @@ class User(Base,UserMixin):
     phonenumber = db.Column(db.Text)#手机号
 
     work_experience = db.Column(db.SmallInteger)#工作年限时长
-
-    upload_resume_url =db.Column(db.String(64))#个人简历url
+    upload_resume_jobname =db.Column(db.String(64))#个人简历名字
     is_disable = db.Column(db.Boolean,default=False)#用户是是否禁用标示
     companys = db.relationship('Company',uselist=False)#公司的链接关系口
     jobs = db.relationship('Job',secondary=user_job)#工作的链接关系口
@@ -100,6 +99,7 @@ class Job(Base):
 
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
     company = db.relationship('Company',uselist=False,backref=db.backref('job',lazy='dynamic'))
+    dilevery = db.relationship('Dilevery')
 
 
 
@@ -112,10 +112,37 @@ class Job(Base):
         return self.job_label.split(' ')
 
     @property
+    def tags(self):
+        tags = ''
+        for tag in self.job_label.split(' '):
+            tags = tags + tag + ','
+        return tags[:-1]
+
+    @property
     def name(self):
         name = self.jobname.split('/')
         return name[0]
 
+
+    def current_user_is_company(self,company_id):
+        if User.query.filter_by(id = company_id).first().role == 20:
+            return True
+        else:
+            return False
+
+
+    def current_user_is_applied(self, user_id):
+        print(Dilevery.query.filter_by(user_id =user_id,job_id = self.id).first())
+        return Dilevery.query.filter_by(user_id =user_id,job_id = self.id).first()
+
+
+    def applied(self,user_id):
+        if not Dilevery.query.filter_by(user_id =user_id, job_id=self.id).first():
+            dilevery = Dilevery()
+            dilevery.job_id = self.id
+            dilevery.user_id = user_id
+            db.session.add(dilevery)
+            db.session.commit()
 
 
 #用于记录用户求职者投递建立到职位的状态信息
@@ -182,3 +209,13 @@ class Company(Base):
     @property
     def count(self):
         return len(Job.query.filter_by(company_id=self.id).all())
+
+    @property
+    def web(self):
+        if 'http:' in self.url:
+            return self.url.split('http://www.')[1]
+        else:
+            return self.url.split('https://www.')[1]
+    @property
+    def detail(self):
+        return self.about.split(' ')
