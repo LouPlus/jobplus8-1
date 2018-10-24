@@ -16,6 +16,9 @@ def register_blueprints(app):
     app.register_blueprint(job)
 
 
+
+
+
 def register_extensions(app):
     db.init_app(app)
     Migrate(app,db)

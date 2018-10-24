@@ -41,7 +41,7 @@ class User(Base,UserMixin):
     _password = db.Column('password',db.String(256),nullable=False)#密码
     phonenumber = db.Column(db.Text)#手机号
 
-    work_experience = db.Column(db.SmallInteger)#工作年限时长  
+    work_experience = db.Column(db.SmallInteger)#工作年限时长
 
     upload_resume_url =db.Column(db.String(64))#个人简历url
     is_disable = db.Column(db.Boolean,default=False)#用户是是否禁用标示
@@ -102,8 +102,19 @@ class Job(Base):
     company = db.relationship('Company',uselist=False,backref=db.backref('job',lazy='dynamic'))
 
 
+
     def __repr__(self):
         return '<Job {}>'.format(self.name)
+
+    @property
+    def job_list(self):
+
+        return self.job_label.split(' ')
+
+    @property
+    def name(self):
+        name = self.jobname.split('/')
+        return name[0]
 
 
 
@@ -158,11 +169,16 @@ class Company(Base):
 
     user_id = db.Column(db.Integer,db.ForeignKey('user.id',ondelete='SET NULL'))
 
- 
+
     user = db.relationship('User',uselist=False,backref=db.backref('company',uselist=False))
-    
+
     def __repr__(self):
         return '<Company {}>'.format(self.id)
 
-    
+    @property
+    def tag_list(self):
+        return self.tag.split(',')
 
+    @property
+    def count(self):
+        return len(Job.query.filter_by(company_id=self.id).all())

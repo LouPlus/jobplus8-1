@@ -34,7 +34,8 @@
         <div class="caption">
           <a href="">
           <b> {{job.name}} </b> <span class="timesince">[ {{ job.created_at}} ]</span>
-          <p>{{ job.experience_requirement }} {{ job.degree_requirement }}</p>
+          <p>{{ job.experience_requirement }} {{ job.degree_requirement }} {{job.lowest_salary}}-{{ job.highest_salary}}</p>
+
 
             {% for tag in job.job_list %}
             <span class="label label-default">{{ tag}}</span>
@@ -82,4 +83,3 @@
 
 
 {% endmacro %}
-

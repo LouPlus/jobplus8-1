@@ -1,8 +1,8 @@
 """v1.0
 
-Revision ID: 881919475848
+Revision ID: e64071065f05
 Revises: 
-Create Date: 2018-10-22 18:40:49.343232
+Create Date: 2018-10-23 16:15:03.975778
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '881919475848'
+revision = 'e64071065f05'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,8 +39,8 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('url', sa.String(length=32), nullable=False),
-    sa.Column('logo', sa.String(length=128), nullable=True),
+    sa.Column('url', sa.String(length=512), nullable=False),
+    sa.Column('logo', sa.String(length=512), nullable=True),
     sa.Column('about', sa.String(length=1024), nullable=False),
     sa.Column('description', sa.String(length=24), nullable=True),
     sa.Column('location', sa.String(length=64), nullable=True),
@@ -65,6 +65,7 @@ def upgrade():
     sa.Column('lowest_salary', sa.Integer(), nullable=True),
     sa.Column('highest_salary', sa.Integer(), nullable=True),
     sa.Column('location', sa.String(length=24), nullable=True),
+    sa.Column('education', sa.String(length=32), nullable=True),
     sa.Column('job_label', sa.String(length=128), nullable=True),
     sa.Column('is_fulltime', sa.Boolean(), nullable=True),
     sa.Column('is_open', sa.Boolean(), nullable=True),
