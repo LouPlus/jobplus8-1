@@ -14,6 +14,11 @@ def job_index():
     )
     return render_template('job/index.html', pagination = pagination)
 
-@job.route('/detail/<int:id>')
+@job.route('/<int:id>')
 def job_detail(id):
-    return render_template('job/job_detail.html')
+    user_id = request.args.get('user_id')
+    job = Job.query.filter_by(id=id).first()
+    if user_id:
+        job.applied(user_id)
+    return render_template('job/job_detail.html', job=job)
+
