@@ -32,9 +32,11 @@
   <div class="col-sm-6 col-md-4">
     <div class="job-box">
         <div class="caption">
+
           <a href="{{url_for('job.job_detail', id = job.id )}}">
           <b class='jn'> {{job.name}} </b></a>
           <span class="timesince">[ {{ job.created_at}} ]</span>
+
           <p>{{ job.experience_requirement }} {{ job.degree_requirement }} {{job.lowest_salary}}-{{ job.highest_salary}}</p>
 
 

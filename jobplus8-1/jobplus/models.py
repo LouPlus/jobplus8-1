@@ -42,7 +42,9 @@ class User(Base,UserMixin):
     phonenumber = db.Column(db.Text)#手机号
 
     work_experience = db.Column(db.SmallInteger)#工作年限时长
+
     upload_resume_jobname =db.Column(db.String(64))#个人简历名字
+
     is_disable = db.Column(db.Boolean,default=False)#用户是是否禁用标示
     companys = db.relationship('Company',uselist=False)#公司的链接关系口
     jobs = db.relationship('Job',secondary=user_job)#工作的链接关系口
@@ -103,6 +105,7 @@ class Job(Base):
 
 
 
+
     def __repr__(self):
         return '<Job {}>'.format(self.name)
 
@@ -124,6 +127,7 @@ class Job(Base):
         return name[0]
 
 
+
     def current_user_is_company(self,company_id):
         if User.query.filter_by(id = company_id).first().role == 20:
             return True
@@ -143,6 +147,7 @@ class Job(Base):
             dilevery.user_id = user_id
             db.session.add(dilevery)
             db.session.commit()
+
 
 
 #用于记录用户求职者投递建立到职位的状态信息
@@ -210,6 +215,7 @@ class Company(Base):
     def count(self):
         return len(Job.query.filter_by(company_id=self.id).all())
 
+
     @property
     def web(self):
         if 'http:' in self.url:
@@ -219,3 +225,4 @@ class Company(Base):
     @property
     def detail(self):
         return self.about.split(' ')
+

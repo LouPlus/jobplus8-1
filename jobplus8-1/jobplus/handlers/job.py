@@ -21,3 +21,4 @@ def job_detail(id):
     if user_id:
         job.applied(user_id)
     return render_template('job/job_detail.html', job=job)
+
