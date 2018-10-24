@@ -34,25 +34,26 @@
   <div class="col-sm-6 col-md-4">
     <div class="job-box">
         <div class="caption">
-          <a href="">
-          <b> {{job.name}} </b> <span class="timesince">[ {{ job.created_at}} ]</span>
+          <a href="{{url_for('job.job_detail', id = job.id )}}">
+          <b class='jn'> {{job.name}} </b></a>
+          <span class="timesince">[ {{ job.created_at}} ]</span>
           <p>{{ job.experience_requirement }} {{ job.degree_requirement }} {{job.lowest_salary}}-{{ job.highest_salary}}</p>
 
 
             {% for tag in job.job_list %}
             <span class="label label-default">{{ tag}}</span>
             {% endfor %}
-          </a>
+
         </div>
         <hr>
         <div class="media">
           <div class="media-left">
-            <a href="">
+            <a href="{{url_for('company.company_detail', id = job.company.id )}}">
             <img class="media-object" src="{{job.company.logo}}" alt="..." width="40" height="40">
             </a>
             </div>
             <div class="media-body">
-            <a href="">
+            <a href="{{url_for('company.company_detail', id = job.company.id )}}">
             <h4 class="media-heading">{{job.company.user.username}}</h4>
             </a>
             <span class="company-meta">{{ job.company.about}}</span>
@@ -68,14 +69,14 @@
   <div class="col-sm-6 col-md-3 company-item">
     <div class="job-box">
       <div class="caption">
-        <a href="">
+        <a href="{{url_for('company.company_detail', id = company.id)}}">
           <img src="{{company.logo }}" alt="..." width="90" height="90">
           <h3>{{company.user.username}}</h3>
 
         </a>
         <hr>
 
-        <a href="">
+        <a href="{{url_for('company.company_jobs', id = company.id)}}">
           <p>在招职位：{{ company.count }}</p>
         </a>
       </div>
