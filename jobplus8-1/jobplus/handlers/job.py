@@ -1,6 +1,7 @@
 from flask import Blueprint ,render_template, request, current_app
 from ..models import Job
 from jobplus.decorators import admin_required, company_required
+
 #from jobplus.forms import LoginForm,RegisterForm
 
 job = Blueprint('job',__name__,url_prefix='/job')

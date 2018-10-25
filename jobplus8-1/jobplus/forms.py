@@ -273,6 +273,7 @@ class Add_Job_Form(FlaskForm):
             flash('职位信息更新失败','info')
         return job
 
+
 class AddJobForm(Add_Job_Form):
     company_id = StringField('公司id')
     def create_job(self):
@@ -286,3 +287,4 @@ class AddJobForm(Add_Job_Form):
             db.session.rollback()
             flash('职位信息创建失败','info')
         return job
+
