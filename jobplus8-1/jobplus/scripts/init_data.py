@@ -1,5 +1,5 @@
 import  json
-from ..models import Job, Company, User, db
+from ..models import Job, Company, User, db, Delivery
 from faker import Faker
 import os
 import random
@@ -56,6 +56,15 @@ class Data:
                     job_label = faker.word() + ' ' + faker.word() + ' ' + faker.word(),
                     company = self.f_company
                     )
+
+    def delivery(self, job_id ,user_id):
+        company_id = Job.query.filter_by(id = job_id).first().company.id
+        return Delivery(job_id = job_id,
+        user_id = user_id,
+        company_id = company_id
+
+        )
+
     @property
     def add_data(self):
         for company in self.companys:
@@ -105,6 +114,28 @@ class Data:
             print(e)
             db.session.rollback()
 
+        #add user
+        user =  User(name = faker.name(),
+                username = 'user',
+                email = 'user@qq.com',
+                role = 10,
+                phonenumber = faker.phone_number(),
+                password = "123456"
+                )
+
+        db.session.add(user)
+        try:
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+
+        #add delivery
+        user = User.query.filter_by(username = 'user').first()
+        for job_id in range(2,100):
+            delivery = self.delivery(job_id, user.id)
+            db.session.add(delivery)
+            db.session.commit()
 
 
 def run():
