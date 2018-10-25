@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}求职者{% endblock %}
+{% block user_index %}
+  <div class="panel panel-success">
+    <!-- Default panel contents -->
+    <div class="panel-body">
+      <p>个人详情</p>
+    </div>
+    <!-- Table -->
+    <table class="table">
+      <th>姓名</th>
+      <th>工作年限</th>
+      <th>邮箱</th>
+      <th>手机号码</th>
+      <tr>
+        <td>{{user.name}}</td>
+        <td>{{user.work_experience}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.phonenumber}}</td>
+      </tr>
+    </table>
+  </div>
+
+
+{% endblock %}
+{% block pdf%}
+  {% if user.upload_resume_jobname %}
+    <h2>{{ user.upload_resume_jobname}}</h2>
+    <embed type="video/quicktime" src="{{url_for('static',filename='resume/'+user.upload_resume_jobname)}}" width="1000" height="500">
+  {% endif %}
+{% endblock %}

@@ -12,7 +12,7 @@
         <p><span class="job-salary">{{ job.lowest_salary }}-{{ job.highest_salary }}</span>&nbsp;经验<span class='exp'>{{ job.experience_requirement }}</span> 学历<span class='edu'>{{ job.degree_requirement }}</span></p>
       </div>
       <div class="col-md-4">
-        {% if  current_user.is_authenticated and not job.current_user_is_company(current_user.get_id())%}
+        {% if  current_user.is_authenticated and not current_user.is_company%}
           {% if  not job.current_user_is_applied(current_user.get_id())  %}
             <a href="{{url_for('job.job_detail', id=job.id, user_id=current_user.get_id())}}"class="btn btn-success btn-lg dilivery-btn">投递简历</a>
           {% else %}

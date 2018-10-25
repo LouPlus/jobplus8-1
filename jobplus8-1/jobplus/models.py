@@ -99,7 +99,7 @@ class Job(Base):
 
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
     company = db.relationship('Company',uselist=False,backref=db.backref('job',lazy='dynamic'))
-    dilevery = db.relationship('Dilevery')
+    dilevery = db.relationship('Delivery')
 
 
 
@@ -123,44 +123,43 @@ class Job(Base):
         name = self.jobname.split('/')
         return name[0]
 
-
-    def current_user_is_company(self,company_id):
-        if User.query.filter_by(id = company_id).first().role == 20:
-            return True
-        else:
-            return False
-
-
     def current_user_is_applied(self, user_id):
-        print(Dilevery.query.filter_by(user_id =user_id,job_id = self.id).first())
-        return Dilevery.query.filter_by(user_id =user_id,job_id = self.id).first()
+        return Delivery.query.filter_by(user_id =user_id,job_id = self.id).first()
 
 
-    def applied(self,user_id):
-        if not Dilevery.query.filter_by(user_id =user_id, job_id=self.id).first():
-            dilevery = Dilevery()
-            dilevery.job_id = self.id
-            dilevery.user_id = user_id
-            db.session.add(dilevery)
+    def applied(self,user_id,job_id):
+        if not Delivery.query.filter_by(user_id =user_id, job_id=self.id).first():
+            delivery = Delivery()
+            company_id = Job.query.filter_by(id = job_id).first().company.id
+
+
+            delivery.job_id = self.id
+            delivery.user_id = user_id
+            delivery.company_id = company_id
+            db.session.add(delivery)
             db.session.commit()
 
 
+
 #用于记录用户求职者投递建立到职位的状态信息
-class Dilevery(Base):
+class Delivery(Base):
 
     __tablename__ = 'delivery'
 
     #等待企业审核
     STATUS_WAITING = 1
-    #被拒绝
-    STATUS_REJECT=2
-    #被接受，等待通知面试
-    STATUS_ACCEPT =3
+    #已审核
+    STATUS_LOOK=2
+
+
 
     id = db.Column(db.Integer,primary_key=True)#id自增
     job_id = db.Column(db.Integer,db.ForeignKey('job.id',ondelete='SET NULL'))#工作id，默认为空
     user_id = db.Column(db.Integer,db.ForeignKey('user.id',ondelete='SET NULL'))#用户id，默认为空
+    company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='SET NULL'))
     status = db.Column(db.SmallInteger,default=STATUS_WAITING)#投递状态，默认为等待企业审核
+    user = db.relationship('User', uselist=False)
+    job = db.relationship('Job', uselist=False)
 
 
     response = db.Column(db.String(256))#企业回应数据
@@ -208,14 +207,15 @@ class Company(Base):
 
     @property
     def count(self):
-        return len(Job.query.filter_by(company_id=self.id).all())
+        return len(Job.query.filter_by(company_id=self.id).all()) - len(Job.query.filter_by(is_open=False).all())
 
     @property
     def web(self):
         if 'http:' in self.url:
-            return self.url.split('http://www.')[1]
+            return self.url.split('http://')[1]
         else:
-            return self.url.split('https://www.')[1]
+            return self.url.split('https://')[1]
+
     @property
     def detail(self):
         return self.about.split(' ')
