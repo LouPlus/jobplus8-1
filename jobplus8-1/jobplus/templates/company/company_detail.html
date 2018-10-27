@@ -29,17 +29,20 @@
         <p>{{ company.description}}</p>
         {% else %}
         {% for job in company.job %}
-        <div class="job-item">
-          <a href="{{ url_for('job.job_detail', id=job.id) }}">
-          <h4>{{ job.jobname }}</h4>
-          </a>
-          <p>
-            <span class="job-salary">{{ job.lowest_salary }}-{{ job.highest_salary }}</span>
-            &nbsp;
-            <span class="job-meta">经验{{ job.experience_requirement }}{% if not job.experience_requirement == '不限' %}年{% endif %}/{{ job.degree_requirement }}</span>
-            </p>
+          {% if job.is_open %}
+            <div class="job-item">
+              <a href="{{ url_for('job.job_detail', id=job.id) }}">
+              <h4>{{ job.jobname }}</h4>
+              </a>
+              <p>
+                <span class="job-salary">{{ job.lowest_salary }}-{{ job.highest_salary }}</span>
+                &nbsp;
+                <span class="job-meta">经验{{ job.experience_requirement }}{% if not job.experience_requirement == '不限' %}年{% endif %}/{{ job.degree_requirement }}</span>
+                </p>
 
-        </div>
+            </div>
+          {% endif%}
+
         {% endfor %}
         {% endif %}
       </div>

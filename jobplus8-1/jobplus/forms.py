@@ -234,21 +234,48 @@ class AddCompanyForm(FlaskForm):
 
 
 #管理员增加和修改职位资料
-class AddJobForm(FlaskForm):
+class Add_Job_Form(FlaskForm):
     jobname = StringField('职位名称')
     lowest_salary = IntegerField('最低薪酬')
     highest_salary = IntegerField('最高薪酬')
     experience_requirement = StringField('经验要求')
     description = StringField('职位描述')
     degree_requirement = StringField('职位学历要求')
-    company_id = IntegerField('职位所属公司id')
+
     submit = SubmitField('提交')
 
     def validate_company_id(self, field):
         if not Company.query.filter_by(id=field.data).first():
             raise ValidationError('所属公司id不存在，请核对后重新输入')
 
+    def create_job(self,id):
+        job = Job()
+        self.populate_obj(job)
+        job.company_id = id
+        db.session.add(job)
+        try:
+            db.session.commit()
+            flash('职位添加成功','success')
+        except:
+            db.session.rollback()
+            flash('职位信息创建失败','info')
+        return job
 
+
+    def update_job(self,job):
+        self.populate_obj(job)
+        db.session.add(job)
+        try:
+            db.session.commit()
+            flash('职位信息更新成功','success')
+        except:
+            db.session.rollback()
+            flash('职位信息更新失败','info')
+        return job
+
+
+class AddJobForm(Add_Job_Form):
+    company_id = StringField('公司id')
     def create_job(self):
         job = Job()
         self.populate_obj(job)
@@ -261,13 +288,3 @@ class AddJobForm(FlaskForm):
             flash('职位信息创建失败','info')
         return job
 
-    def update_job(self,job):
-        self.populate_obj(job)
-        db.session.add(job)
-        try:
-            db.session.commit()
-            flash('职位添加成功','success')
-        except:
-            db.session.rollback()
-            flash('职位信息更新失败','info')
-        return job

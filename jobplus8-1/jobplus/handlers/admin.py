@@ -132,4 +132,3 @@ def job_action(job_id,action):
         db.session.rollback()
         flash('岗位操作失败')
     return redirect(url_for('admin.users'))
-

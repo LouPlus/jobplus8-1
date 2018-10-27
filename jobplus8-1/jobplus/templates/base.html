@@ -31,7 +31,7 @@
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">Jobplus</a>
+          <a class="navbar-brand" href="{{url_for('front.index')}}">Jobplus</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,12 +41,13 @@
             <li><a href="{{ url_for('company.company_index')}} ">公司</a></li>
             {% if  current_user.is_admin %}
             <li><a href="{{ url_for('admin.index')}}">管理</a></li>
+            {% elif current_user.is_company %}
+              <li><a href="{{ url_for('company.manage', id = current_user.get_id())}}">管理</a></li>
             {% endif %}
 
           </ul>
           <ul class="nav navbar-nav navbar-right">
           {% if not current_user.is_authenticated %}
-
             <li><a href="{{ url_for('front.user_register')}}">用户注册</a></li>
             <li><a href="{{ url_for('front.company_register')}}">企业注册</a></li>
             <li><a href="{{ url_for('front.login') }}">登录</a></li>
@@ -56,9 +57,11 @@
               <ul class="dropdown-menu">
                 <li><a href="{{url_for('user.user_index')}}">我的主页</a></li>
                 {% if current_user.is_user %}
+                <li><a href="{{ url_for('user.user_index', user_id = current_user.get_id())}}">主页</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="{{ url_for('user.user_profile')}}">资料修改</a></li>
                 {% elif current_user.is_company %}
+                <li><a href="{{ url_for('company.company_detail', id = current_user.get_id() )}}">公司主页</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="{{ url_for('company.profile')}}">资料修改</a></li>
                 {% endif %}
@@ -104,7 +107,8 @@
     {% block user_index %}{% endblock %}
 
 
-
+    {% block pdf%}
+    {% endblock %}
     <div class="footer">
       &copy; Copyright 2018 by <a href="http://www.shiyanlou.com/">shiyalou</a>
     </div>
