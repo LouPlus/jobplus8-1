@@ -11,11 +11,22 @@ class DevelopmentConfig(BaseConfig):
     ADMIN_PER_PAGE=9
     COMPANY_PER_PAGE=12
 
+
+
+
 class ProductionConfig(BaseConfig):
     pass
 
 class TestingConfig(BaseConfig):
-    pass
+    TESTING = True
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://root@localhost:3306/jobplus?charset=utf8'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    TEMPLATES_AUTO_RELOAD = True
+    INDEX_PER_PAGE=9
+    ADMIN_PER_PAGE=9
+    COMPANY_PER_PAGE=12
+
 
 configs = { 'development' : DevelopmentConfig,
             'production' : ProductionConfig,

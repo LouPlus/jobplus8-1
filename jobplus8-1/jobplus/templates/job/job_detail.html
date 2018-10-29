@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block title %}
   {{job.jobname}}
 {% endblock %}
@@ -51,6 +52,5 @@
   <p>人员：{{ job.company.detail[2] }}</p>
   <p>城市：{{ job.company.location }}</p>
 </div>
-
 
 {% endblock %}

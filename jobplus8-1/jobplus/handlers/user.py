@@ -33,9 +33,7 @@ def user_profile():
         file = form.upload_resume_file.data
         if file:
             filename = secure_filename(file.filename)
-
             file.save(os.path.join('jobplus/static/','resume', filename))
-
             user.upload_resume_jobname = filename
             db.session.add(user)
             db.session.commit()

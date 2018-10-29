@@ -42,9 +42,7 @@ class User(Base,UserMixin):
     phonenumber = db.Column(db.Text)#手机号
 
     work_experience = db.Column(db.SmallInteger)#工作年限时长
-
     upload_resume_jobname =db.Column(db.String(64))#个人简历名字
-
     is_disable = db.Column(db.Boolean,default=False)#用户是是否禁用标示
     companys = db.relationship('Company',uselist=False)#公司的链接关系口
     jobs = db.relationship('Job',secondary=user_job)#工作的链接关系口
@@ -101,9 +99,7 @@ class Job(Base):
 
     company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
     company = db.relationship('Company',uselist=False,backref=db.backref('job',lazy='dynamic'))
-
     dilevery = db.relationship('Delivery')
-
 
 
 
@@ -126,7 +122,6 @@ class Job(Base):
     def name(self):
         name = self.jobname.split('/')
         return name[0]
-
 
     def current_user_is_applied(self, user_id):
         return Delivery.query.filter_by(user_id =user_id,job_id = self.id).first()
@@ -208,12 +203,11 @@ class Company(Base):
 
     @property
     def tag_list(self):
-        return self.tag.split(',')
+        return self.tags.split(',')
 
     @property
     def count(self):
         return len(Job.query.filter_by(company_id=self.id).all()) - len(Job.query.filter_by(is_open=False).all())
-
 
     @property
     def web(self):
@@ -221,7 +215,6 @@ class Company(Base):
             return self.url.split('http://')[1]
         else:
             return self.url.split('https://')[1]
-
 
     @property
     def detail(self):

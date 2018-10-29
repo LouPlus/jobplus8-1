@@ -115,4 +115,3 @@ def manage_resumes(id):
         error_out = False
     )
     return render_template('company/manage_resumes.html',pagination = pagination)
-
