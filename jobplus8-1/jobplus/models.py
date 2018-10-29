@@ -203,7 +203,7 @@ class Company(Base):
 
     @property
     def tag_list(self):
-        return self.tag.split(',')
+        return self.tags.split(',')
 
     @property
     def count(self):
